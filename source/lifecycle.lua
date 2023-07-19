@@ -1,3 +1,8 @@
+import "storage"
+import "screens/shop"
+import "main"
+import "navigation"
+
 -- All callbacks for the app and game lifecycle.
 -- See https://sdk.play.date/1.9.3/Inside%20Playdate.html#game-lifecycle for more information
 
@@ -21,6 +26,7 @@ end
 --- Called when the player chooses to exit the game via the System Menu or Menu button.
 function playdate.gameWillTerminate()
 	print(prefix .. "Game will terminate...")
+	saveData()
 end
 
 --
@@ -40,4 +46,5 @@ end
 --- Called before the device goes to low-power sleep mode because of a low battery.
 function playdate.deviceWillSleep()
 	print(prefix .. "Device will sleep...")
+	saveData()
 end

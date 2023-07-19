@@ -1,3 +1,5 @@
+import "CoreLibs/crank"
+
 -- All the callbacks for the crank.
 -- See https://sdk.play.date/1.9.3/Inside%20Playdate.html#_crank_callbacks for more information
 
@@ -12,7 +14,7 @@ function playdate.cranked(change, acceleratedChange)
 		change,
 		acceleratedChange
 	)
-	print(prefix .. log)
+	-- print(prefix .. log)
 end
 
 --- Called when the crank is docked.
@@ -23,4 +25,8 @@ end
 --- Called when the crank is undocked.
 function playdate.crankUndocked()
 	print(prefix .. "Crank undocked.")
+end
+
+function getCrankTicks(ticksPerRevolution)
+	return playdate.getCrankTicks(ticksPerRevolution)
 end

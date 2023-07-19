@@ -1,3 +1,5 @@
+import "screens/shop"
+-- import "main"
 -- All the callbacks for button presses.
 -- See https://sdk.play.date/1.9.3/Inside%20Playdate.html#buttonCallbacks for more information
 
@@ -10,6 +12,16 @@ local prefix <const> = "[Button] "
 --- Called immediately when the user presses the "A" button.
 function playdate.AButtonDown()
 	print(prefix .. "A button pressed down.")
+	local selected = Shop:getSelectedRow()
+	local item = MenuItems[selected]
+	local cost = item['cost']
+	if (NumberOfCookies >= cost) then
+		NumberOfCookies = NumberOfCookies - cost
+		CookiesPerSecond = CookiesPerSecond + item['cps']
+
+		item['count'] = item['count'] + 1
+		item['cost'] = math.floor(item['cost'] + 1.15 ^ item['count'])
+	end
 end
 
 --- Called after the "A" button is held for one second.
@@ -48,6 +60,7 @@ end
 --- Called immediately after the player presses the down direction on the d-pad.
 function playdate.downButtonDown()
 	print(prefix .. "Down button pressed.")
+	Shop:selectNextRow(1)
 end
 
 --- Called immediately after the player releases the down direction on the d-pad.
@@ -58,6 +71,8 @@ end
 --- Called immediately after the player presses the left direction on the d-pad.
 function playdate.leftButtonDown()
 	print(prefix .. "Left button pressed.")
+	setSelectedScreen(-1)
+	Navigation:selectPreviousColumn(1)
 end
 
 --- Called immediately after the player releases the left direction on the d-pad.
@@ -68,6 +83,8 @@ end
 --- Called immediately after the player presses the right direction on the d-pad.
 function playdate.rightButtonDown()
 	print(prefix .. "Right button pressed.")
+	setSelectedScreen(1)
+	Navigation:selectNextColumn(1)
 end
 
 --- Called immediately after the player releases the right direction on the d-pad.
@@ -78,6 +95,7 @@ end
 --- Called immediately after the player presses the up direction on the d-pad.
 function playdate.upButtonDown()
 	print(prefix .. "Up button pressed.")
+	Shop:selectPreviousRow(1)
 end
 
 --- Called immediately after the player releases the up direction on the d-pad.
